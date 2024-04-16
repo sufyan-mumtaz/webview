@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
+import Cookies from 'js-cookie';
 
 function App() {
+  const session = Cookies.get('session');
+  useEffect(() => {
+    const sendMessageToNative = (message) => {
+      window.ReactNativeWebView?.postMessage(message);
+    };
+    sendMessageToNative('Hello, React Native!');
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      {session ? <h1>Hello</h1> : <span>Invalid Token</span>}
     </div>
   );
 }
